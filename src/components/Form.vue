@@ -1,84 +1,145 @@
-<template>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <form method="POST" class="background" action="">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div id="root">
-                                        <table border="1" cellpadding="0" cellspacing="0" >
-                                            <tr>
-                                                <th width="162">Teste (1)</th>
-                                                <th width="144">Teste (2)</th>
-                                                <th width="124">Teste (3)</th>
-                                                <th width="120">Teste (4)</th>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3"></div>
-            <div class="col-sm-3"></div>
-        </div>
-    </div>
-</template>
-
 <script>
 
-export default{
-    name: 'Form'
-}
 
-new Vue({
-  el: '#root',
-  data: {
-    users: [],
-    errorMessage: ""
-  },
-
-  methods: {
-
-    getAllUsers: function() {
-
-      var self = this;
-
-      axios.get("http://localhost/nft-vue/src/backend/conexao.php")
-        .then(function(response) {
-          console.log(response);
-          if (response.data.error) {
-            self.errorMessage = response.date.message;
-          } else {
-            self.users = response.data.users;
-          }
-        });
+export default {
+  name: 'Form',
+  data() {
+    return {
+      nome: null,
+      sobrenome: null,
+      endereco: null,
+      cidade: null,
     }
   },
+  methods: {
+    async getDados(e) {
+      e.preventDefault()
 
-  mounted: function() {
-    this.getAllUsers();
-    console.log("mounted");
+      const dataRes = {
+          nome: this.nome,
+          sobrenome: this.sobrenome,
+          endereco: this.endereco,
+          cidade: this.cidade
+      }
+
+      const req = await fetch("http://localhost/nft-vue/src/backend/conexao.php");
+      const data = await req.json();
+
+      nome = 
+
+      console.log(data);
+    }
+  },
+  mounted() {
+    this.getDados()
   }
+}
 
-})
+// const server = "http://localhost/nft-vue/src/backend/conexao.php";
+
+// let results = await axios.get(`${server}/users`);
+
+
+// let results = await axios.get('http://localhost/nft-vue/src/backend/conexao.php');
+
+// this.res = results.data;
+
+// console.log(res)
 
 </script>
 
+<template>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="row">
+          <div class="col-sm-12">
+            <form method="POST" action="">
+              <div class="back">
+                <div class="row">
+                  <div class="col-sm-6 inputs pt-3">
+                    <label for="nome">Insira seu nome</label>
+                    <input v-model="nome" style="color: rgb(255, 0, 68);" class="form-control" name="nome" id="nome"
+                      :class="nome" type="text">
+                      {{ nome }}
+                  </div>
+                  <div class="col-sm-6 inputs pt-3">
+                    <label for="sobrenome">Insira seu sobrenome</label>
+                    <input style="color: rgb(255, 0, 68);" class="form-control" name="sobrenome" id="sobrenome"
+                      :class="sobrenome" type="text">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6 inputs pt-3">
+                    <label for="endereco">Insira o seu endereço</label>
+                    <input style="color: rgb(255, 0, 68);" class="form-control" name="endereco" id="endereco"
+                      :class="endereco" type="text">
+                  </div>
+                  <div class="col-sm-6 inputs pt-3">
+                    <label for="cidade">Insira sua cidade</label>
+                    <input style="color: rgb(255, 0, 68);" class="form-control" name="cidade" id="cidade"
+                      :class="cidade" type="text">
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3"></div>
+      <div class="col-sm-3"></div>
+    </div>
+  </div>
+  <br><br><br><br><br><br><br>
+</template>
+
 <style scoped>
-
-.background{
-    background-color: red !important;
+.back {
+  background-color: transparent;
+  padding: 20px;
+  border-radius: 80px;
 }
 
-.container{
-    margin-top: 100px;
+.col-sm-12 {
+  background: transparent;
+  ;
 }
 
+.container {
+  margin-top: 100px;
+}
 
+label {
+  color: rgb(216, 216, 216);
+}
+
+input {
+  background-color: rgb(3, 3, 3);
+  border: none;
+  border-radius: 10px;
+  outline: none !important;
+  background-size: cover;
+}
+
+input:focus,
+input:active {
+  background-color: black;
+}
+
+textarea:focus,
+input:focus,
+select:focus {
+  box-shadow: 0 0 0 0;
+  border: 0 none;
+  outline: 0;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 50px rgb(255, 0, 68) inset;
+}
+
+input:-webkit-autofill {
+  -webkit-text-fill-color: rgb(255, 255, 255) !important;
+  font-size: 15px;
+}
 </style>

@@ -31,7 +31,7 @@ export default{
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  background-color: rgb(23, 23, 23);
+  background-color: rgb(17, 17, 17);
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
 }
 
