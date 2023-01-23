@@ -5,33 +5,17 @@ export default {
   name: 'Form',
   data() {
     return {
-      nome: null,
-      sobrenome: null,
-      endereco: null,
-      cidade: null,
+      dados: []
     }
   },
   methods: {
-    async getDados(e) {
-      e.preventDefault()
-
-      const dataRes = {
-          nome: this.nome,
-          sobrenome: this.sobrenome,
-          endereco: this.endereco,
-          cidade: this.cidade
-      }
-
-      const req = await fetch("http://localhost/nft-vue/src/backend/conexao.php");
-      const data = await req.json();
-
-      nome = 
-
-      console.log(data);
+    carregarDados() {
+      axios.get('http://10.46.118.244/nft-vue/src/backend/conexao.php')
+        .then(response => (this.dados = response.data))
     }
   },
-  mounted() {
-    this.getDados()
+  created() {
+    this.carregarDados()
   }
 }
 
@@ -59,9 +43,9 @@ export default {
                 <div class="row">
                   <div class="col-sm-6 inputs pt-3">
                     <label for="nome">Insira seu nome</label>
-                    <input v-model="nome" style="color: rgb(255, 0, 68);" class="form-control" name="nome" id="nome"
+                    <input v-for="dado in dados" :key="dado.id" style="color: rgb(255, 0, 68);" class="form-control" name="nome" id="nome"
                       :class="nome" type="text">
-                      {{ nome }}
+                      {{ dado.nome }}
                   </div>
                   <div class="col-sm-6 inputs pt-3">
                     <label for="sobrenome">Insira seu sobrenome</label>
